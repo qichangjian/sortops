@@ -1,4 +1,4 @@
-package com.qcj;
+package com.qcj.sortdemo;
 
 /**
  * 二分查找

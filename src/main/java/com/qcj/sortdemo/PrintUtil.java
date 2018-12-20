@@ -1,4 +1,4 @@
-package com.qcj;
+package com.qcj.sortdemo;
 
 /**
  * 打印数组工具类
