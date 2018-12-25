@@ -1,4 +1,4 @@
-package com.qcj.linkdemo;
+package com.qcj.linkdemo.single_linkedList;
 
 /**
  * 单向链表

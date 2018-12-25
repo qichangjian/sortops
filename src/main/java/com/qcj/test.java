@@ -1,5 +1,7 @@
 package com.qcj;
 
+import java.util.Random;
+
 /**
  * >>> 是无符号右移运算符
  * 无符号右移就是将那个数转为2进制然后在前面补0
@@ -10,7 +12,10 @@ package com.qcj;
  */
 public class test {
     public static void main(String[] args) {
+        System.out.println(9 >>> 1);
+        while(true){
+            System.out.println(new Random().nextInt(1));
+        }
 
-        System.out.println(7 >>> 1);
     }
 }

@@ -1,0 +1,8 @@
+实现线程的三种方式
+1.实现runable
+2.继承Thread
+3.重写callable接口重写call方法
+    1.5后，返回一个参数
+https://blog.csdn.net/lx_Frolf/article/details/82318736
+https://blog.csdn.net/qq_33666932/article/details/79371826
+
