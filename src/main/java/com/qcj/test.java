@@ -17,5 +17,9 @@ public class test {
             System.out.println(new Random().nextInt(1));
         }
 
+        /**
+         * 集合，排序，多线程锁，设计模式
+         * https://www.cnblogs.com/0201zcr/p/4769108.html
+         */
     }
 }

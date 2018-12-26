@@ -1,0 +1,33 @@
+类的声明周期：
+  1.加载：
+     把 .class 加载 到 方法区的内存中，
+     并且 创建 一个 对应的对象  在 堆中（Class）；
+  2.连接
+    1)验证：
+       对字节码文件 .class进行验证。
+    2）准备
+       对静态变量 分配空间 ，进行默认初始化；
+    3）把 符号引用 替换 为 直接引用；。
+  3.初始化
+    对静态 变量 声明处 或者 静态块处初始化。
+
+
+反射：TestDemo5.java
+  获得 运行时 类的信息。
+
+  访问属性：
+     Field
+              getDeclaredFields();  获得 所有的属性（包含私有）
+       常用方法： getName()              名
+              getType()              类型
+              getModifiers()         访问权限
+
+  访问方法：
+    Method
+                getDeclaredMethods(） 获得所有方法
+       常用方法：getReturnType() 获得范围值类型
+                getParameterTypes() 获得参数列表
+  访问构造：
+     Constructor
+               getDeclaredConstructors(); //获得所有
+      常用方法：newInstance() 调用构造

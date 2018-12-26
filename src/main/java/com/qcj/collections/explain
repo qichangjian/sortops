@@ -1,0 +1,198 @@
+1.集合分类：
+	         集合：
+	         collection
+        |                    |
+	  单值				    双值的
+list		set			    map
+arrayList	HashSet		    Hashmap
+LinkedList	TreeSet		    treemap
+vector					    hashtable
+stack					    concurrenthashmap
+
+1.具体讲解
+（1）List集合： 有序（有元素的插入顺序），可重复的集合
+        （1.1）arrayList:
+                底层实现：数组
+                如何实现的：
+                    创建数组的时候  长度是0
+                    第一次添加元素的时候   初始化数组的长度   10
+                数组的扩容：
+                    数组的元素个数超过10个的时候   扩容的工作
+                    grow（）
+                    int newCapacity = oldCapacity + (oldCapacity >> 1);
+                                    =1.5*oldCapacity
+                    数组扩容的时候 每次1.5倍进行扩容的
+                    进行数组的复制的工作
+                数组的上限：arrayList数组的上限：Integer_max(21亿)-8
+                    15亿------15*1.5=====22.亿
+                    数组的上限   integer_maxvalue  21亿
+                    arraylist的size的最大上限是integer_maxvalue
+                        性能瓶颈10亿左右
+
+                    右移1位   /2    2位  /4
+                    左移：1   *2     2  *4
+
+                构造方法中有参构造   无参构造
+                    public ArrayList(int initialCapacity) {
+                        if (initialCapacity > 0) {
+                            this.elementData = new Object[initialCapacity];
+                        } else if (initialCapacity == 0) {
+                            this.elementData = EMPTY_ELEMENTDATA;
+                        } else {
+                            throw new IllegalArgumentException("Illegal Capacity: "+
+                                                               initialCapacity);
+                        }
+
+                    }
+                    有参构造的使用场景：
+                        如果使用无参构造，初始化数组的长度0  第一次添加元素的时候开始  长度10   以后的每次扩容   1.5倍进行扩容
+                        1000
+                        10   15    22   33    50   75   112   。。。。
+                        数组扩容----数组的拷贝的过程  消耗资源的过程
+
+                        使用有参构造  参数：代表的是我们数组初始化的长度
+                        参数500---750----1000+
+                        当arraylist中元素个数很多的时候  最好使用有参构造   减少底层数组的扩容的次数   提升性能
+                        add（E e）
+                        remove(E e)
+                    特点：
+                        查询快   增删慢
+                        数组有索引的   通过下标直接访问  时间复杂度o(1)
+                            时间复杂度o(1)  数组    hash
+
+        （1.2）LinkedList:
+                底层实现：链表结构的
+                    链表：
+                    线性链表：
+                        单向：
+                            只有一个方向的链表   上一个元素知道下一个元素  但是下一个元素不知道上一个元素的  访问的时候只能从一端开始
+                        双向：
+                            两个方向的链表   每一个元素  都知道自己的上一个元素和下一个元素是谁		    可以从两个方向访问
+                    环形链表：
+                        收尾相连的链表
+
+                LinkedList的底层的结构  链表--线性的（1.5之前   单向的   1.5之后 双向的）
+                链表结构中的每一个元素  就叫做node  对象   Node
+                Node的结构：
+                        private static class Node<E> {
+                            E item;
+                            Node<E> next;
+                            Node<E> prev;
+
+                            Node(Node<E> prev, E element, Node<E> next) {
+                                this.item = element;
+                                this.next = next;
+                                this.prev = prev;
+                            }
+                        }
+                    addFirst(E e)
+
+                    添加元素的时候 实际上是对Node的操作
+
+                    扩容机制：
+                           由于它的底层是用双向链表实现的，所以它对元素的增加、删除效率要比ArrayList好；
+                           它是一个双向链表，没有初始化大小，也没有扩容的机制，就是一直在前面或者后面新增就好。
+                    优点*：
+                        增删快   查询慢
+
+                    Java中transient关键字的作用，简单地说，就是让某些被修饰的成员属性变量不被序列化，这一看好像很好理解，就是不被序列化
+
+        vector：线程同步数组 基本抛弃使用。
+            vector 和arrayList的区别
+                vector：线程安全的  但是性能低
+                arrayList  线程不安全的   性能高
+        stack：（相当于一个桶）
+            栈结构
+            先进后出的
+
+ （2）set集合：无序（没有插入顺序的）   不可重复的
+		set集合就是map集合的一部分  key
+		HashSet：Hashmap  key
+			底层结构：
+			数组  16+链表（单向的）+树（红黑树）
+			元素存储的时候  先对元素（key）取hash值
+				hash冲突   hash碰撞
+				hash算法：就是生成一个唯一的散列的数
+					不存在一个绝对完美的hash算法可以做到 任意两个甚至多个key的hash值不同的
+					任何一个hash算法都会存在hash冲突的问题
+						hash冲突：不同的key得到的hash值相同
+			Node<K,V>[] tab;  数组  数组的初始化容量  16
+			Node<K,V> p;    记录每一个元素的
+			int n, i;  记录数组的下标
+
+			数组扩容的节点：
+				数组进行扩容的阀值  数组的容量达到整个数组的0.75就会进行数组的扩容的操作   16*0.75=12
+				static final float DEFAULT_LOAD_FACTOR = 0.75f;
+				newCap = oldCap << 1  每次扩容  扩大2倍   32
+			hashset如何去重的：
+				hash值不同的两个元素  一定不是同一个元素
+				先判断hash值   equals方法（地址）  不存
+		TreeSet	:  treemap   key
+			有序（元素值是排序的）  不可重复的
+			底层结构：红黑树
+			排序：自然排序
+				数值：值的大小  默认升序的
+				字符串：字典顺序进行排序的
+				12   11   1   2   3   4   34   23   26
+				1
+				11
+				12
+				2
+				23
+				26
+				3
+				34
+				4
+			要求  我们的set集合中存放的元素是  有排序能力的（如果是自定义对象，需要实现compare比较器）
+（3）map:
+   		treemap:
+   		Hashmap:
+   		    底层结构：
+        			数组  16+链表（单向链表）+树（红黑树）
+   		    默认的初始化容量（底层数组）1<<4 -- 16
+   		    链表结构转换为树结构的最大阀值：8（1.8之后的）
+   		    树结构转换为链表结构的阀值：6
+   		    默认的最大容量：1<<30   2的30次方
+   		    加载因子：0.75 （存储到数组0.75后就会2倍扩容）
+   		    数组扩容的节点：
+                数组进行扩容的阀值  数组的容量达到整个数组的0.75就会进行数组的扩容的操作   16*0.75=12
+                static final float DEFAULT_LOAD_FACTOR = 0.75f;
+                newCap = oldCap << 1  每次扩容  扩大2倍   32
+            链表和树的转换：
+                因为是一个单向链表（8）所以查询的时候性能低，
+                在1.8之后做了一个优化，当链表的深度超过8的时候就将链表转换为 树结构
+                    链表结构转换为树结构的最大阀值：8（1.8之后的）
+                    树结构转换为链表结构的阀值：6
+            put添加的实现：
+                元素存储的时候  先对元素（key）取hash值
+                    hash冲突   hash碰撞
+                    hash算法：就是生成一个唯一的散列的数
+                        不存在一个绝对完美的hash算法可以做到 任意两个甚至多个key的hash值不同的
+                        任何一个hash算法都会存在hash冲突的问题
+                            hash冲突：不同的key得到的hash值相同
+                Node<K,V>[] tab;  数组  数组的初始化容量  16
+                Node<K,V> p;    记录每一个元素的
+                int n, i;  记录数组的下标
+
+                数组扩容的节点：
+                    数组进行扩容的阀值  数组的容量达到整个数组的0.75就会进行数组的扩容的操作   16*0.75=12
+                    static final float DEFAULT_LOAD_FACTOR = 0.75f;
+                    newCap = oldCap << 1  每次扩容  扩大2倍   32
+                        为什么要扩容2倍数？
+                            原来数组下标中链表中存储了元素，原来模余16,现在如果两倍 就是模余32 可以把原来链表中的元素分担到新扩容的数组下标下
+                        为什么出现了树转变为链表的阀值：
+                            因为数组扩容，所以出现了树转链表结构的阀值：因为深度减少了
+                hashset如何去重的：
+                    hash值不同的两个元素  一定不是同一个元素
+                  先判断hash值   在用equals方法（地址）判断，  如果equals相同，值不进行存储,因为是set
+
+
+   		hashTable  和hashMap:
+   			hashtable  线程安全（就是加锁）   性能低   整个数组的线程锁  所以出现了concurrenthashMap
+   			hashmap   线程非安全的   性能高
+   		concurrenthashMap:  既可以做到线程安全  又可以保证性能的
+   			分段线程锁+读写锁
+   				从数据的操作，锁的分类：
+   					读锁：共享锁   所有的线程可以共用这把锁
+   					写锁：排他锁  同一时间只能允许一个线程操作
+   			会对hashMAP底层的数组进行分段加锁  通过具体的操作   决定加的是读锁还是写锁

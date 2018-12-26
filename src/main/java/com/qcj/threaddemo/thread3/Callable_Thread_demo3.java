@@ -7,6 +7,11 @@ import java.util.concurrent.Future;
 
 /**
  * Callable接口是Java1.5开始出现的只有一个带返回值的call（）方法
+ *      步骤：
+ *          1.ExecutorService启动线程
+ *          2.实例化一个自己写的线程类
+ *          3.Future接收返回的参数
+ *          4.Future.get取得返回值（get方式会阻塞，需要抛出异常）
  */
 public class Callable_Thread_demo3 {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
