@@ -12,10 +12,10 @@ import java.util.Random;
  */
 public class test {
     public static void main(String[] args) {
-        System.out.println(9 >>> 1);
-        while(true){
+        System.out.println(6 << 2);
+        /*while(true){
             System.out.println(new Random().nextInt(1));
-        }
+        }*/
 
         /**
          * 集合，排序，多线程锁，设计模式
