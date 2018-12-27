@@ -65,7 +65,7 @@ public class TestDemo6 {
         }
         //单个构造
         Constructor cr1 = c.getConstructor();//得到无参构造
-        cr1.newInstance();
+        cr1.newInstance();//用newInstance与用new是区别的，区别在于创建对象的方式不一样，前者是使用类加载机制
         Constructor cr2 = c.getConstructor(int.class,String.class);//有参数构造
         cr2.newInstance(111,"abc");
 
